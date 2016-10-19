@@ -1,0 +1,64 @@
+buildscript {
+    repositories {
+        mavenCentral()
+    }
+    dependencies {
+        classpath "org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}"
+        classpath "io.spring.gradle:dependency-management-plugin:${dependencyManagementVersion}"
+    }
+}
+
+task wrapper(type: Wrapper) {
+    gradleVersion = "2.14"
+}
+
+configure(subprojects) { project ->
+    apply plugin: 'java'
+    apply plugin: 'idea'
+    apply plugin: 'spring-boot'
+    apply plugin: "io.spring.dependency-management"
+
+    buildDir = "build"
+    group 'ru.romanow.hightload'
+
+    sourceCompatibility = 1.8
+    targetCompatibility = 1.8
+
+    idea {
+        module {
+            downloadJavadoc = true
+            downloadSources = true
+        }
+    }
+
+    repositories {
+        mavenCentral()
+    }
+}
+
+project("common") {
+    apply from: '../libraries.gradle'
+
+    dependencies {
+        compile "org.springframework.boot:spring-boot-starter-data-jpa"
+
+        compile "com.google.code.findbugs:jsr305:${findBugsVersion}"
+
+        compile "com.google.guava:guava:${guavaVersion}"
+        compile "org.apache.commons:commons-lang3:${commonsLangVersion}"
+    }
+}
+
+project("application") {
+    apply from: '../libraries.gradle'
+
+    dependencies {
+        compile project(":common")
+
+        compile "org.flywaydb:flyway-core:${flywayVersion}"
+        compile "org.springframework.boot:spring-boot-starter-logging"
+        compile "org.springframework.boot:spring-boot-devtools"
+
+        compile "org.postgresql:postgresql:${postgresDriverVersion}"
+    }
+}

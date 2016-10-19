@@ -1,0 +1,5 @@
+rootProject.name = 'highload'
+
+include 'common'
+include 'application'
+
