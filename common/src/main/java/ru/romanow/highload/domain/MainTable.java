@@ -22,8 +22,17 @@ public class MainTable {
     @Column
     private Integer value;
 
+    @ManyToOne
+    @JoinColumn(name = "category_id", referencedColumnName = "id")
+    private DomainTable category;
+
     public Integer getId() {
         return id;
+    }
+
+    public MainTable setId(Integer id) {
+        this.id = id;
+        return this;
     }
 
     public String getName() {
@@ -41,6 +50,15 @@ public class MainTable {
 
     public MainTable setValue(Integer value) {
         this.value = value;
+        return this;
+    }
+
+    public DomainTable getCategory() {
+        return category;
+    }
+
+    public MainTable setCategory(DomainTable category) {
+        this.category = category;
         return this;
     }
 

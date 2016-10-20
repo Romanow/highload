@@ -4,6 +4,7 @@ import com.google.common.base.MoreObjects;
 import com.google.common.base.Objects;
 
 import javax.persistence.*;
+import java.util.List;
 
 /**
  * Created by ronin on 19.10.16
@@ -19,8 +20,16 @@ public class DomainTable {
     @Column
     private String category;
 
+    @OneToMany(mappedBy = "category")
+    private List<MainTable> values;
+
     public Integer getId() {
         return id;
+    }
+
+    public DomainTable setId(Integer id) {
+        this.id = id;
+        return this;
     }
 
     public String getCategory() {
@@ -29,6 +38,15 @@ public class DomainTable {
 
     public DomainTable setCategory(String category) {
         this.category = category;
+        return this;
+    }
+
+    public List<MainTable> getValues() {
+        return values;
+    }
+
+    public DomainTable setValues(List<MainTable> values) {
+        this.values = values;
         return this;
     }
 
