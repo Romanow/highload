@@ -1,13 +1,14 @@
-package ru.romanow.restful;
+package ru.romanow.highload;
 
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.boot.autoconfigure.flyway.FlywayAutoConfiguration;
 
 /**
  * Created by romanow on 02.09.16
  */
-@SpringBootApplication
+@SpringBootApplication(exclude = FlywayAutoConfiguration.class)
 public class Application
         implements CommandLineRunner {
 

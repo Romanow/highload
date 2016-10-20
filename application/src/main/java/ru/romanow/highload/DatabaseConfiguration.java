@@ -1,7 +1,8 @@
-package ru.romanow.restful;
+package ru.romanow.highload;
 
 import org.flywaydb.core.Flyway;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.autoconfigure.flyway.FlywayMigrationInitializer;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.DependsOn;
@@ -21,12 +22,18 @@ public class DatabaseConfiguration {
     private DataSource dataSource;
 
     @Bean
-    @DependsOn("persistenceUnit")
+    @DependsOn("entityManagerFactory")
     public Flyway flyway() {
         Flyway flyway = new Flyway();
         flyway.setDataSource(dataSource);
         flyway.setSchemas("highload");
+        flyway.setLocations("classpath:db.migration");
         flyway.setOutOfOrder(true);
         return flyway;
+    }
+
+    @Bean
+    public FlywayMigrationInitializer flywayInitializer(Flyway flyway) {
+        return new FlywayMigrationInitializer(flyway);
     }
 }
