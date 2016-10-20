@@ -3,6 +3,7 @@ package ru.romanow.highload.reposiroty;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
 import ru.romanow.highload.domain.MainTable;
+import ru.romanow.highload.model.AverageValueInCategoryInfo;
 
 import java.util.List;
 
@@ -17,5 +18,5 @@ public interface RequestRepository
             "join m.category d " +
             "group by d.category " +
             "order by d.category")
-    List<MainTable> averageValueInCategory();
+    List<AverageValueInCategoryInfo> averageValueInCategory();
 }
