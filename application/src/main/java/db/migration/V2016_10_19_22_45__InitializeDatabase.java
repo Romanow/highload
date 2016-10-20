@@ -3,6 +3,8 @@ package db.migration;
 import org.flywaydb.core.api.migration.spring.SpringJdbcMigration;
 import org.springframework.jdbc.core.JdbcTemplate;
 
+import java.util.List;
+import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
 /**
@@ -14,9 +16,12 @@ public class V2016_10_19_22_45__InitializeDatabase
     @Override
     public void migrate(JdbcTemplate jdbcTemplate) throws Exception {
         String domainTableInsertSql = "INSERT INTO domain_table (category) VALUES (?)";
-        IntStream.range(0, 100)
-                .forEach(i -> {
-                    jdbcTemplate.update(domainTableInsertSql, i);
-                });
+        List<Object[]> categories =
+                IntStream.range(0, 100)
+                         .boxed()
+                         .map(i -> new Object[]{ "Category " + i })
+                         .collect(Collectors.toList());
+        jdbcTemplate.batchUpdate(domainTableInsertSql, categories);
+
     }
 }

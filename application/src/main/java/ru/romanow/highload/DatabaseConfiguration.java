@@ -26,9 +26,9 @@ public class DatabaseConfiguration {
     public Flyway flyway() {
         Flyway flyway = new Flyway();
         flyway.setDataSource(dataSource);
-        flyway.setSchemas("highload");
         flyway.setLocations("classpath:db.migration");
         flyway.setOutOfOrder(true);
+        flyway.setBaselineOnMigrate(true);
         return flyway;
     }
 
