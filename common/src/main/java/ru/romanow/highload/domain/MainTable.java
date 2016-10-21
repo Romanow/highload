@@ -22,8 +22,11 @@ public class MainTable {
     @Column
     private Integer value;
 
-    @ManyToOne
-    @JoinColumn(name = "category_id", referencedColumnName = "id")
+    @Column(name = "category_id")
+    private Integer categoryId;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "category_id_fk", referencedColumnName = "id")
     private DomainTable category;
 
     public Integer getId() {
@@ -39,9 +42,19 @@ public class MainTable {
         return name;
     }
 
+    public Integer getCategoryId() {
+        return categoryId;
+    }
+
+    public MainTable setCategoryId(Integer categoryId) {
+        this.categoryId = categoryId;
+        return this;
+    }
+
     public MainTable setName(String name) {
         this.name = name;
         return this;
+
     }
 
     public Integer getValue() {

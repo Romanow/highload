@@ -2,9 +2,6 @@ package ru.romanow.highload.model;
 
 import com.google.common.base.MoreObjects;
 
-/**
- * Created by ronin on 20.10.16
- */
 public class AverageValueInCategoryInfo {
     private Double average;
     private String category;

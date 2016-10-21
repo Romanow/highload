@@ -1,17 +1,14 @@
 package ru.romanow.highload.reposiroty;
 
+import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
-import org.springframework.data.repository.CrudRepository;
 import ru.romanow.highload.domain.MainTable;
 import ru.romanow.highload.model.AverageValueInCategoryInfo;
 
 import java.util.List;
 
-/**
- * Created by ronin on 20.10.16
- */
-public interface RequestRepository
-        extends CrudRepository<MainTable, Integer> {
+public interface MainTableRepository
+        extends JpaRepository<MainTable, Integer> {
 
     @Query("select new ru.romanow.highload.model.AverageValueInCategoryInfo(avg(m.value), d.category) " +
             "from MainTable m " +

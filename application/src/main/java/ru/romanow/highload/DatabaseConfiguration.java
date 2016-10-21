@@ -10,9 +10,6 @@ import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 
 import javax.sql.DataSource;
 
-/**
- * Created by romanow on 18.10.16
- */
 @Configuration
 @EnableJpaRepositories
 public class DatabaseConfiguration {
