@@ -9,7 +9,9 @@ import java.util.stream.IntStream;
 
 public class V2016_10_20_21_00__InitializeDomainTable
         implements SpringJdbcMigration {
-    private static final int SIZE = 100;
+    private static final int SIZE = 1000;
+//    private static final int SIZE = 100;
+//    private static final int SIZE = 10;
 
     @Override
     public void migrate(JdbcTemplate jdbcTemplate) throws Exception {

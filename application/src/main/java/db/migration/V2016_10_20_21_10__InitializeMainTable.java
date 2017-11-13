@@ -15,6 +15,7 @@ public class V2016_10_20_21_10__InitializeMainTable
         implements SpringJdbcMigration {
 
     private static final int SIZE = 1_000_000;
+//    private static final int SIZE = 100;
 
     @Override
     public void migrate(JdbcTemplate jdbcTemplate) throws Exception {

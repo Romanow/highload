@@ -9,17 +9,17 @@ buildscript {
 }
 
 task wrapper(type: Wrapper) {
-    gradleVersion = "2.14"
+    gradleVersion = "3.5"
 }
 
 configure(subprojects) { project ->
     apply plugin: 'java'
     apply plugin: 'idea'
-    apply plugin: 'spring-boot'
-    apply plugin: "io.spring.dependency-management"
+    apply plugin: 'org.springframework.boot'
+    apply plugin: 'io.spring.dependency-management'
 
     buildDir = "build"
-    group 'ru.romanow.hightload'
+    group 'ru.romanow.highload'
 
     sourceCompatibility = 1.8
     targetCompatibility = 1.8
@@ -28,6 +28,16 @@ configure(subprojects) { project ->
         module {
             downloadJavadoc = true
             downloadSources = true
+        }
+    }
+
+    jar {
+        archiveName =  "${project.name}.jar"
+    }
+
+    dependencyManagement {
+        imports {
+            mavenBom "io.spring.platform:platform-bom:${springPlatformVersion}"
         }
     }
 
@@ -42,10 +52,10 @@ project("common") {
     dependencies {
         compile "org.springframework.boot:spring-boot-starter-data-jpa"
 
-        compile "com.google.code.findbugs:jsr305:${findBugsVersion}"
+        compile "com.google.guava:guava"
+        compile "org.apache.commons:commons-lang3"
 
-        compile "com.google.guava:guava:${guavaVersion}"
-        compile "org.apache.commons:commons-lang3:${commonsLangVersion}"
+        compile "com.google.code.findbugs:jsr305:${findBugsVersion}"
     }
 }
 
@@ -55,11 +65,11 @@ project("application") {
     dependencies {
         compile project(":common")
 
-        compile "org.flywaydb:flyway-core:${flywayVersion}"
+        compile "org.flywaydb:flyway-core"
         compile "org.springframework.boot:spring-boot-starter-logging"
         compile "org.springframework.boot:spring-boot-starter-aop"
         compile "org.springframework.boot:spring-boot-devtools"
 
-        compile "org.postgresql:postgresql:${postgresDriverVersion}"
+        compile "org.postgresql:postgresql"
     }
 }
