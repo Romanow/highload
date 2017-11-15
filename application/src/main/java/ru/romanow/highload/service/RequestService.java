@@ -46,17 +46,17 @@ public class RequestService {
     @Timed("testInMemoryComputeExcludeDatabase")
     public List<AverageValueInCategoryInfo> collect(List<MainTable> values, List<DomainTable> categories) {
         return values.stream()
-                     .collect(Collectors.groupingBy(MainTable::getCategoryId, Collectors.averagingInt(MainTable::getValue)))
-                     .entrySet().stream()
-                     .map(entry -> new AverageValueInCategoryInfo(entry.getValue(), findCategory(categories, entry.getKey())))
-                     .collect(Collectors.toList());
+                .collect(Collectors.groupingBy(MainTable::getCategoryId, Collectors.averagingInt(MainTable::getValue)))
+                .entrySet().stream()
+                .map(entry -> new AverageValueInCategoryInfo(entry.getValue(), findCategory(categories, entry.getKey())))
+                .collect(Collectors.toList());
     }
 
     private String findCategory(List<DomainTable> categories, Integer key) {
         return categories.stream()
-                         .filter(c -> c.getId().equals(key))
-                         .findFirst()
-                         .get()
-                         .getCategory();
+                .filter(c -> c.getId().equals(key))
+                .findFirst()
+                .map(DomainTable::getCategory)
+                .orElse(null);
     }
 }
