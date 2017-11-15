@@ -9,20 +9,33 @@ buildscript {
 }
 
 task wrapper(type: Wrapper) {
-    gradleVersion = "2.14"
+    gradleVersion = "3.5"
 }
 
 configure(subprojects) { project ->
     apply plugin: 'java'
     apply plugin: 'idea'
-    apply plugin: 'spring-boot'
+    apply plugin: 'org.springframework.boot'
     apply plugin: "io.spring.dependency-management"
+    apply from: '../libraries.gradle'
 
     buildDir = "build"
     group 'ru.romanow.hightload'
 
     sourceCompatibility = 1.8
     targetCompatibility = 1.8
+
+    dependencyManagement {
+        imports {
+            mavenBom "io.spring.platform:platform-bom:${springPlatformVersion}"
+        }
+    }
+
+    configurations.all {
+        resolutionStrategy {
+            force "org.hibernate:hibernate-core:${hibernateVersion}"
+        }
+    }
 
     idea {
         module {
@@ -55,11 +68,11 @@ project("application") {
     dependencies {
         compile project(":common")
 
-        compile "org.flywaydb:flyway-core:${flywayVersion}"
+        compile "org.flywaydb:flyway-core"
         compile "org.springframework.boot:spring-boot-starter-logging"
         compile "org.springframework.boot:spring-boot-starter-aop"
         compile "org.springframework.boot:spring-boot-devtools"
 
-        compile "org.postgresql:postgresql:${postgresDriverVersion}"
+        compile "org.postgresql:postgresql"
     }
 }
