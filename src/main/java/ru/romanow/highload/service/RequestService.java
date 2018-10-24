@@ -1,9 +1,11 @@
 package ru.romanow.highload.service;
 
+import lombok.AllArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Sort;
+import org.springframework.data.domain.Sort.Order;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import ru.romanow.highload.annotation.Timed;
@@ -16,15 +18,16 @@ import ru.romanow.highload.reposiroty.MainTableRepository;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import static org.springframework.data.domain.Sort.Direction.ASC;
+import static org.springframework.data.domain.Sort.by;
+
 @Service
+@AllArgsConstructor
 public class RequestService {
     private static final Logger logger = LoggerFactory.getLogger(RequestService.class);
 
-    @Autowired
-    private MainTableRepository mainTableRepository;
-
-    @Autowired
-    private DomainTableRepository domainTableRepository;
+    private final MainTableRepository mainTableRepository;
+    private final DomainTableRepository domainTableRepository;
 
     @Timed("testDatabaseCompute")
     @Transactional(readOnly = true)
@@ -34,9 +37,9 @@ public class RequestService {
     }
 
     @Timed("testInMemoryCompute")
+    @Transactional(readOnly = true)
     public void testInMemoryCompute() {
-        List<DomainTable> categories = domainTableRepository.findAll(
-                new Sort(new Sort.Order(Sort.Direction.ASC, "id")));
+        List<DomainTable> categories = domainTableRepository.findAll(by(new Order(ASC, "id")));
         List<MainTable> values = mainTableRepository.findAll();
 
         List<AverageValueInCategoryInfo> list = collect(values, categories);

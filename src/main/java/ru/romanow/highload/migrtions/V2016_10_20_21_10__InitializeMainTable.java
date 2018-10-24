@@ -1,4 +1,4 @@
-package db.migration;
+package ru.romanow.highload.migrtions;
 
 import com.google.common.collect.Lists;
 import org.apache.commons.lang3.RandomStringUtils;

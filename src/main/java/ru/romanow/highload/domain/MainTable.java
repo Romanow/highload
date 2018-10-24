@@ -2,12 +2,13 @@ package ru.romanow.highload.domain;
 
 import com.google.common.base.MoreObjects;
 import com.google.common.base.Objects;
+import lombok.Data;
+import lombok.experimental.Accessors;
 
 import javax.persistence.*;
 
-/**
- * Created by ronin on 19.10.16
- */
+@Data
+@Accessors(chain = true)
 @Entity
 @Table(name = "main_table")
 public class MainTable {
@@ -22,58 +23,12 @@ public class MainTable {
     @Column
     private Integer value;
 
-    @Column(name = "category_id")
+    @Column(name = "category_id", insertable = false, updatable = false)
     private Integer categoryId;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "category_id_fk", referencedColumnName = "id")
+    @JoinColumn(name = "category_id", foreignKey = @ForeignKey(name = "fk_main_table_category"))
     private DomainTable category;
-
-    public Integer getId() {
-        return id;
-    }
-
-    public MainTable setId(Integer id) {
-        this.id = id;
-        return this;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public Integer getCategoryId() {
-        return categoryId;
-    }
-
-    public MainTable setCategoryId(Integer categoryId) {
-        this.categoryId = categoryId;
-        return this;
-    }
-
-    public MainTable setName(String name) {
-        this.name = name;
-        return this;
-
-    }
-
-    public Integer getValue() {
-        return value;
-    }
-
-    public MainTable setValue(Integer value) {
-        this.value = value;
-        return this;
-    }
-
-    public DomainTable getCategory() {
-        return category;
-    }
-
-    public MainTable setCategory(DomainTable category) {
-        this.category = category;
-        return this;
-    }
 
     @Override
     public boolean equals(Object o) {

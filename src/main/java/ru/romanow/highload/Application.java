@@ -1,5 +1,6 @@
 package ru.romanow.highload;
 
+import lombok.AllArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,26 +17,22 @@ import ru.romanow.highload.service.RequestService;
 
 import java.util.List;
 
-@SpringBootApplication(exclude = FlywayAutoConfiguration.class)
+@AllArgsConstructor
+@SpringBootApplication
 public class Application
         implements CommandLineRunner {
     private static final Logger logger = LoggerFactory.getLogger(Application.class);
 
-    @Autowired
-    private MainTableRepository mainTableRepository;
-
-    @Autowired
-    private DomainTableRepository domainTableRepository;
-
-    @Autowired
-    private RequestService requestService;
+    private final MainTableRepository mainTableRepository;
+    private final DomainTableRepository domainTableRepository;
+    private final RequestService requestService;
 
     public static void main(String[] args) {
         SpringApplication.run(Application.class, args);
     }
 
     @Override
-    public void run(String... args) throws Exception {
+    public void run(String... args) {
         requestService.testDatabaseCompute();
 
         requestService.testInMemoryCompute();

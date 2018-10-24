@@ -2,13 +2,14 @@ package ru.romanow.highload.domain;
 
 import com.google.common.base.MoreObjects;
 import com.google.common.base.Objects;
+import lombok.Data;
+import lombok.experimental.Accessors;
 
 import javax.persistence.*;
 import java.util.List;
 
-/**
- * Created by ronin on 19.10.16
- */
+@Data
+@Accessors(chain = true)
 @Entity
 @Table(name = "domain_table")
 public class DomainTable {
@@ -22,33 +23,6 @@ public class DomainTable {
 
     @OneToMany(mappedBy = "category")
     private List<MainTable> values;
-
-    public Integer getId() {
-        return id;
-    }
-
-    public DomainTable setId(Integer id) {
-        this.id = id;
-        return this;
-    }
-
-    public String getCategory() {
-        return category;
-    }
-
-    public DomainTable setCategory(String category) {
-        this.category = category;
-        return this;
-    }
-
-    public List<MainTable> getValues() {
-        return values;
-    }
-
-    public DomainTable setValues(List<MainTable> values) {
-        this.values = values;
-        return this;
-    }
 
     @Override
     public boolean equals(Object o) {

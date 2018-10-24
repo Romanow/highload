@@ -1,4 +1,4 @@
-package db.migration;
+package ru.romanow.highload.migrtions;
 
 import org.flywaydb.core.api.migration.spring.SpringJdbcMigration;
 import org.springframework.jdbc.core.JdbcTemplate;

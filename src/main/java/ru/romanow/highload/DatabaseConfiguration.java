@@ -15,7 +15,6 @@ import javax.sql.DataSource;
 public class DatabaseConfiguration {
 
     @Autowired
-    @SuppressWarnings("SpringJavaAutowiringInspection")
     private DataSource dataSource;
 
     @Bean
@@ -23,7 +22,7 @@ public class DatabaseConfiguration {
     public Flyway flyway() {
         Flyway flyway = new Flyway();
         flyway.setDataSource(dataSource);
-        flyway.setLocations("classpath:db.migration");
+        flyway.setLocations("classpath:ru/romanow/highload/migrations");
         flyway.setOutOfOrder(true);
         flyway.setBaselineOnMigrate(true);
         return flyway;
