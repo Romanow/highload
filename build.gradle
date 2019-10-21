@@ -1,27 +1,14 @@
-buildscript {
-    repositories {
-        mavenCentral()
-    }
-    dependencies {
-        classpath "org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}"
-    }
+plugins {
+    id "java"
+    id "idea"
+    id "org.springframework.boot" version "2.1.7.RELEASE"
+    id "io.spring.dependency-management" version "1.0.8.RELEASE"
 }
 
-task wrapper(type: Wrapper) {
-    gradleVersion = "4.10"
-}
-
-apply plugin: 'java'
-apply plugin: 'idea'
-apply plugin: 'org.springframework.boot'
-apply plugin: "io.spring.dependency-management"
 apply from: 'libraries.gradle'
 
-buildDir = "build"
-group 'ru.romanow.highload'
-
-sourceCompatibility = 1.8
-targetCompatibility = 1.8
+sourceCompatibility = 1.11
+targetCompatibility = 1.11
 
 idea {
     module {
@@ -33,7 +20,6 @@ idea {
 repositories {
     mavenCentral()
 }
-
 
 dependencies {
     compile "org.springframework.boot:spring-boot-starter"
@@ -47,7 +33,11 @@ dependencies {
     compile "org.postgresql:postgresql"
     compile "org.apache.commons:commons-lang3"
 
-    compileOnly "org.projectlombok:lombok"
-    compile "com.google.code.findbugs:jsr305:${findBugsVersion}"
+    compileOnly "com.google.code.findbugs:jsr305:${findBugsVersion}"
+    compileOnly "org.projectlombok:lombok:${lombokVersion}"
+    annotationProcessor "org.projectlombok:lombok:${lombokVersion}"
 }
 
+bootJar {
+    archiveFileName = "${project.name}.jar"
+}

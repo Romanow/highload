@@ -1,4 +1,5 @@
 ext {
     guavaVersion = "20.0"
+    lombokVersion = "1.18.2"
     findBugsVersion = "3.0.2"
 }
